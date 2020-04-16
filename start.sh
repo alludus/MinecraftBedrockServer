@@ -29,6 +29,9 @@ cd dirname/minecraftbe/servername
 if [ -d "worlds" ]; then
     echo "Backing up server (to minecraftbe/servername/backups folder)"
     tar -pzvcf backups/$(date +%Y.%m.%d.%H.%M.%S).tar.gz worlds
+    #Remove all except 5 latest backups
+    find backups -type f -printf '%T@\t%p\n' | sort -t $'\t' -g | head -n -5 | cut -d $'\t' -f 2- | xargs rm
+
 fi
 
 # Retrieve latest version of Minecraft Bedrock dedicated server
